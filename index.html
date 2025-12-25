@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Young Minds Technology Solutions – Employees</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #111827;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      display: block;
+      margin: 0 auto 30px;
+      width: 100%;
+      max-width: 420px;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+    }
+
+    .grid {
+      max-width: 1300px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f2937;
+      margin-bottom: 10px;
+    }
+
+    .link a {
+      color: #0a66c2;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Young Minds Technology Solutions</h1>
+  <div class="subtitle">Employee LinkedIn Directory</div>
+
+  <input
+    type="text"
+    class="search-box"
+    placeholder="Search employee name..."
+    onkeyup="filterEmployees(this.value)"
+  />
+
+  <div class="grid" id="employeeGrid"></div>
+
+  <div class="footer">
+    © 2025 Young Minds Technology Solutions
+  </div>
+
+  <script>
+    const profiles = [
+      // Previous employees
+      "https://www.linkedin.com/in/mukkali-charan/",
+      "https://www.linkedin.com/in/saida149/",
+      "https://www.linkedin.com/in/balaram-panigrahy-2a7988210/",
+      "https://www.linkedin.com/in/saranya-sri-58278455/",
+      "https://www.linkedin.com/in/kavitha-kanuri-608593258/",
+      "https://www.linkedin.com/in/navya-sree-battala-794053390/",
+      "https://www.linkedin.com/in/kiran-katam-973b66129/",
+      "https://www.linkedin.com/in/dudekula-mahaboob-basha-457385307/",
+      "https://www.linkedin.com/in/mahendra-veligenti-1a044a311/",
+      "https://www.linkedin.com/in/srinivasulu-meenuga-5105b126b/",
+      "https://www.linkedin.com/in/poojitha-annikapati-611563283/",
+      "https://www.linkedin.com/in/venugopalgodugu/",
+      "https://www.linkedin.com/in/paul-saji-901827339/",
+      "https://www.linkedin.com/in/sasi-kumar-punimangadu-444112296/",
+      "https://www.linkedin.com/in/maipati-purushotham-696410252/",
+      "https://www.linkedin.com/in/charmitha-govindu-b00a66311/",
+      "https://www.linkedin.com/in/muppalla-harsha-vardhan-834548387/",
+      "https://www.linkedin.com/in/harish-sunkara-a88807239/",
+      "https://www.linkedin.com/in/gandrajupalli-amulya/",
+      "https://www.linkedin.com/in/deviprasad-vana/",
+      "https://www.linkedin.com/in/venu-pulibandla-703848172/",
+      "https://www.linkedin.com/in/vijay-kumar-adimoolam-b67952251/",
+      "https://www.linkedin.com/in/chinni-krishna-eragaraju-426b40216/",
+      "https://www.linkedin.com/in/k-asad/",
+
+      // Newly added employees
+      "https://www.linkedin.com/in/pavan-kumar-pasima-a2b273260",
+      "https://www.linkedin.com/in/gopi-narne/",
+      "https://www.linkedin.com/in/nizam3700/",
+      "https://www.linkedin.com/in/kaluva-harika-5b3904264/",
+      "https://www.linkedin.com/in/satyanp/",
+      "https://www.linkedin.com/in/maruti-saisurya-rajanala-784a26224/",
+      "https://www.linkedin.com/in/gokulkumarvs/",
+      "https://www.linkedin.com/in/prakash-kothakota-78b403255/",
+      "https://www.linkedin.com/in/shivamguptav01/",
+      "https://www.linkedin.com/in/aishwarya-raut-b098a4214/",
+      "https://www.linkedin.com/in/hemanthreddy47/",
+      "https://www.linkedin.com/in/konisetty-kalpana-7aa93a1a4/",
+      "https://www.linkedin.com/in/spoorthi-surendra-b1b8352b4/",
+      "https://www.linkedin.com/in/kola-raveendra-22a36a25a/",
+      "https://www.linkedin.com/in/harathi-d-634aa2137/",
+      "https://www.linkedin.com/in/ajit-muduli-6ba132274/",
+      "https://www.linkedin.com/in/mohiseen/",
+      "https://www.linkedin.com/in/purna-nanda-9b4b25254/",
+      "https://www.linkedin.com/in/venkata-ashok-9498342b5/",
+      "https://www.linkedin.com/in/rakesh-g-868016331/",
+      "https://www.linkedin.com/in/balaji-jonna-03669426b/",
+      "https://www.linkedin.com/in/digital-krishna-430908373/",
+      "https://www.linkedin.com/in/venkateswarlu-ega-1aa49a27a/",
+      "https://www.linkedin.com/in/gayathri-d-a33706173/",
+      "https://www.linkedin.com/in/pm-dinesh-a55b23289/",
+      "https://www.linkedin.com/in/golu-pandey/",
+      "https://www.linkedin.com/in/agraharam-chidambaram-b7852a1a0/",
+      "https://www.linkedin.com/in/rainy-nesik-9a6528282/",
+      "https://www.linkedin.com/in/naladammigari-munikumar-b20466247/",
+      "https://www.linkedin.com/in/veeraballi-kiran-reddy-765b44273/",
+      "https://www.linkedin.com/in/bhadra-thupati-01b147a0/",
+      "https://www.linkedin.com/in/sandeep-taduku-090957236/",
+      "https://www.linkedin.com/in/chandragiri-jayavardhan-58044118b/",
+      "https://www.linkedin.com/in/yethendra-kumar-a5177a1b4/",
+      "https://www.linkedin.com/in/ameer-seo-analyst-3a14151b5/",
+      "https://www.linkedin.com/in/shajith-shaik-648ab827b/",
+      "https://www.linkedin.com/in/kalyaahna-sundaram-151086187/",
+      "https://www.linkedin.com/in/sapna-rajpurohit-4487aa219/",
+      "https://www.linkedin.com/in/murali-krishna-popuri/",
+      "https://www.linkedin.com/in/pradeep-duckkmalla-063796275/",
+      "https://www.linkedin.com/in/navya-reddy-534b29205/",
+      "https://www.linkedin.com/in/yuvaprashanth/",
+      "https://www.linkedin.com/in/prakash-s-1301932a2/"
+    ];
+
+    const grid = document.getElementById("employeeGrid");
+
+    function formatName(url) {
+      return url
+        .split("/in/")[1]
+        .replace("/", "")
+        .replace(/[-0-9]/g, " ")
+        .replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function renderEmployees() {
+      grid.innerHTML = "";
+      profiles.forEach(url => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="name">${formatName(url)}</div>
+          <div class="link">
+            <a href="${url}" target="_blank">View LinkedIn Profile</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterEmployees(text) {
+      document.querySelectorAll(".card").forEach(card => {
+        card.style.display = card.innerText
+          .toLowerCase()
+          .includes(text.toLowerCase())
+          ? "block"
+          : "none";
+      });
+    }
+
+    renderEmployees();
+  </script>
+
+</body>
+</html>
